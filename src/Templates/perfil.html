@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+
+{% load filter %}
+
+{% block title %} Perfil {% endblock %}
+
+{% block header %}{% endblock %} {# Remplazo el bloque por un vacio para que no cree el header#}
+
+{% block navbar %}
+<a class="nav-link" href="{% url 'home-page' %}">Inicio</a>
+<a class="nav-link" href="{% url 'pelicula_home_page' %}">Películas</a>
+<a class="nav-link" href="{% url 'musica_home_page' %}">Canciones</a>
+<a class="nav-link active" aria-current="page" href="{% url 'perfil' %}">Perfil</a>
+{% endblock %}
+
+{% block main_content %}
+<div class="row mx-2 align-items-center">
+  <div class="col-4  px-3 justify-content-center">
+    <div class="mx-5">
+      <h1 class="text-center"> Datos de usuario </h1>
+      <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="nombre_usuario" style="color: gray">Nombre</label>
+          <p style="color: black"> {{user_id}}
+        </div>
+        <div class="form-group">
+          <label for="Correo usuario" style="color: gray">Correo</label>
+          <p style="color: black"> {{user_email}}
+        </div>
+
+        <a class="btn btn-outline-danger btn-sm" href="{% url 'restore_password' %}" role="button">Cambiar
+          Contraseña</a>
+    </div>
+  </div>
+  </form>
+  <div class="col-8">
+    <div>
+      <h2>Tus playlist de canciones</h2>
+      <div>
+        <div class="accordion accordion-flush" id="accordionPlaylistMusica">
+          {% for playlist in user_playlist_musica %}
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-heading-musica{{ playlist.id }}">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#flush-collapse-musica{{ playlist.id }}" aria-expanded="false"
+                aria-controls="flush-collapse-musica{{ playlist.id }}">
+                {{playlist.nombre}}
+              </button>
+            </h2>
+            <div id="flush-collapse-musica{{ playlist.id }}" class="accordion-collapse collapse"
+              aria-labelledby="flush-heading-musica{{ playlist.id }}" data-bs-parent="#accordionPlaylistMusica">
+              <div class="accordion-body">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Foto</th>
+                      <th scope="col">Nombre</th>
+                      <th scope="col">Album</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for musica in datos_musica|filtro:playlist.id %}
+                    <tr>
+                      <td>
+                        <img src={{musica.musica_iden.url}}
+                          style='max-height:120px; max-width:120px; height:auto; width:auto;'>
+                      </td>
+                      <td>{{musica.musica_iden.nombre}}</td>
+                      <td>{{musica.musica_iden.album}}</td>
+                      {% endfor %}
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <h2>Tus playlist de peliculas</h2>
+      <div>
+        <div class="accordion accordion-flush" id="accordionPlaylistPeliculas">
+          {% for playlist in user_playlist_pelicula %}
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-heading-pelicula{{ playlist.id }}">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#flush-collapse-pelicula{{ playlist.id }}" aria-expanded="false"
+                aria-controls="flush-collapse-pelicula{{ playlist.id }}">
+                {{playlist.nombre}}
+              </button>
+            </h2>
+            <div id="flush-collapse-pelicula{{ playlist.id }}" class="accordion-collapse collapse"
+              aria-labelledby="flush-heading-pelicula{{ playlist.id }}" data-bs-parent="#accordionPlaylistPeliculas">
+              <div class="accordion-body">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col" width="120">Foto</th>
+                      <th scope="col">Nombre</th>
+                      <th scope="col">Genero</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for pelicula in datos_pelicula|filtro:playlist.id %}
+                    <tr>
+                      <td>
+                        <img src={{pelicula.pelicula_iden.url}}
+                          style='max-height:120px; max-width:120px; height:auto; width:auto;'>
+                      </td>
+                      <td>{{pelicula.pelicula_iden.nombre}}</td>
+                      <td>{{pelicula.pelicula_iden.genero}}</td>
+                      {% endfor %}
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

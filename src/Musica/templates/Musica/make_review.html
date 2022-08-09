@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% load filter %}
+
+{% block title %} Perfil {% endblock %}
+
+{% block header %}{% endblock %} {# Remplazo el bloque por un vacio para que no cree el header#}
+
+{% block navbar %}
+<a class="nav-link" href="{% url 'home-page' %}">Inicio</a>
+<a class="nav-link" href="{% url 'pelicula_home_page' %}">Películas</a>
+<a class="nav-link active" aria-current="page" href="{% url 'musica_home_page' %}">Canciones - Review</a>
+<a class="nav-link"  href="{% url 'perfil' %}">Perfil</a>
+{% endblock %}
+
+{% block main_content %}
+<div class="container-md bg-light border">
+    <div>
+      <img src={{cancion.url}} style='max-height:120px; max-width:120px; height:auto; width:auto;'>
+      <font size="50px">{{cancion.nombre}}</font><br>
+      
+    </div>
+    <div class="row">
+        
+
+        <div class="col-12">
+          <h3>Haz tu review!</h3>
+      </div>
+      <div class="col-12">
+        <h4>Nota actual: {{cancion.avg_score}}</h4>
+      </div>
+        <div class="col-12">
+            <form method="post" >
+                {% csrf_token %}
+                Nota: <br>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="nota" id="nota1" value="1" required>
+                    <label class="form-check-label" for="nota1">1</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="nota" id="nota2" value="2">
+                    <label class="form-check-label" for="nota2">2</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="nota" id="nota3" value="3">
+                    <label class="form-check-label" for="nota3">3</label>
+                 </div>
+                 <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="nota" id="nota4" value="4">
+                    <label class="form-check-label" for="nota4">4</label>
+                 </div>
+                 <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="nota" id="nota5" value="5">
+                    <label class="form-check-label" for="nota5">5</label>
+                 </div>
+                <div class="form-group">
+                    <label for="comentario">Comentario</label>
+                    <textarea class="form-control" id="comentario" name="comentario" rows="3" required></textarea>
+                </div>
+                <button class="btn btn-lg btn-primary mt-4 mb-4" type="submit">Entrar</button>
+            </form>
+        </div>    
+    </div>
+
+</div>
+<div class="container-md bg-light border">
+  <div class="row">
+      <div class="col-12">
+          <h3>Ultimos comentarios:</h3>
+      </div>
+      <div class="col-12">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Usuario</th>
+              <th scope="col">Nota</th>
+              <th scope="col">Comentario</th>
+            </tr>
+          </thead>
+          {% for review in ultimas_review %}
+          <tr>
+            <td>{{review.owner.username}}</td>
+            <td>{{review.nota}}</td>
+            <td>{{review.comentario}}</td>
+          </tr>
+          {% endfor %}
+          </tbody>
+        </table>                
+      </div>    
+  </div>
+</div>
+{% endblock %}

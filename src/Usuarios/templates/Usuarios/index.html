@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MixedMediaPlaylistMaker</title>
+    <!--Bootstrap Libreria CSS y JS de estilo-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" 
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">     
+</head>
+<body>
+    <div class="container mt-5">
+
+        <div class="row">
+            <div class="col-12 border bg-light">
+                <h1 class="text-center p-3">Bienvenido {{ user.get_username }}</h1>
+            </div>
+            <div class="col-12 border bg-light">
+                <h1 class="text-center p-3">¿Que quieres ver?</h1>
+            </div>
+        </div>
+
+        <div class="row mt-5 gx-5">
+            <div class="col">
+             <div class="p-3 border bg-light text-center">
+                <a class="btn btn-primary" href="{% url 'pelicula_home_page' %}" role="button">¡Quiero ver Reviews de peliculas!</a>
+             </div>
+            </div>
+            <div class="col">
+              <div class="p-3 border bg-light text-center">
+                <a class="btn btn-primary" href="{% url 'musica_home_page' %}" role="button">¡Quiero ver Reviews de música!</a>
+              </div>
+            </div>
+        </div>
+        
+
+        <div class="row mt-5 gx-5">
+            <div class="col">
+             <div class="p-3 border bg-light text-center">
+                <a class="btn btn-primary" href="{% url 'logout' %}" role="button">Cerrar Sesión</a>
+             </div>
+            </div>
+            </div>
+          </div>
+        </div>
+
+    </div>   
+    <!--Bootstrap Libreria CSS y JS de estilo-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script> 
+</body>
+</html>
